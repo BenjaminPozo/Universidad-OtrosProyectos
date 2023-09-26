@@ -1,0 +1,35 @@
+{% extends 'HomePage/base.html' %}
+
+{% block content %}
+  <div class="row justify-content-center">
+    <div class="col-md-6">
+      <h2>Registrarse</h2>
+      <form method="post">
+        {% csrf_token %}
+        <div class="form-group">
+            {{ registerform.user.label_tag }}
+            {{ registerform.user }}
+        </div>
+        <div class="form-group">
+            {{ registerform.email.label_tag }}
+            {{ registerform.email }}
+        </div>
+        <div class="form-group">
+            {{ registerform.password.label_tag }}
+            {{ registerform.password }}
+        </div>
+        <div class="form-group">
+            {{ registerform.repeatPassword.label_tag }}
+            {{ registerform.repeatPassword }}
+        </div>
+        <button type="submit" class="btn btn-primary">Registrarse</button>
+      </form>
+      <div class="border-top pt-3">
+        <small class="text-muted">
+          ¿Ya tienes una cuenta? <a class="ml-2" href="{% url 'login' %}">Iniciar sesión</a>
+        </small>
+      </div>
+    </div>
+  </div>
+  <a href="{% url 'HomePage' %}"> Volver al Home.</a>
+{% endblock %}

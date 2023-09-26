@@ -1,0 +1,22 @@
+{%extends "HomePage/base.html"%}
+{% block content %}
+    <h1>Home Page</h1>
+    {% if user.is_authenticated %}
+      <h2>Bienvenido {{ user.username }}</h2>
+      <h3>Tu saldo es: ${{ saldo }}</h3>
+      
+      <h3>Transacciones</h3>
+      <a href="{% url 'Transacciones del Usuario' %}"> Ver transacciones. <br></a>
+      <a href="{% url 'Agregar Transacciones' %}"> Añadir Transacciones. <br></a>
+
+      
+    {% endif %}
+
+    <h3>Usuario</h3>
+    {% if user.is_authenticated %}
+      <a href="{% url 'logout' %}">Cerrar sesión.</a>
+    {% else %}
+      <a href="{% url 'login' %}">Iniciar sesión.</a>
+      <a href="{% url 'registro' %}">Registrarse.</a>
+    {% endif %}
+{% endblock %}

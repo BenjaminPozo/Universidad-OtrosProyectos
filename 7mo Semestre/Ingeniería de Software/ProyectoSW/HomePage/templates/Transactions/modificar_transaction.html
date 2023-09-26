@@ -1,0 +1,14 @@
+{% extends '../HomePage/base.html' %}
+
+{% block content %}
+  <h1>Modificar Transacción</h1>
+  <p>Ingrese los datos de la transacción.</p>
+  <form action="" method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit" name="modi" value="modi"  class="btn btn-primary">Modificar</button>
+    <button type="submit" name="del" value="del" class="btn btn-primary">Borrar</button>
+  </form>
+  <br>
+  <a href="{% url 'Transacciones del Usuario' %}">Cancelar.</a>
+{% endblock %}

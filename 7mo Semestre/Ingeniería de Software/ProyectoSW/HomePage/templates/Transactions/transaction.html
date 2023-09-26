@@ -1,0 +1,39 @@
+{% extends '../HomePage/base.html' %}
+{% block content %}
+    <h1>Transacciones</h1>
+    <p>Hola {{user.username}}. Aquí puedes ver tus transacciones.</p>
+
+    <table style="border-collapse: collapse; width: 100%; margin-top: 10px; margin-bottom: 10px;">
+        <thead>
+          <tr>
+            <th style="border: 1px solid black; text-align: center; padding: 8px;">Usuario</th>
+            <th style="border: 1px solid black; text-align: center; padding: 8px;">Fecha</th>
+            <th style="border: 1px solid black; text-align: center; padding: 8px;">Transacción</th>
+            <th style="border: 1px solid black; text-align: center; padding: 8px;">Monto</th>
+            <th style="border: 1px solid black; text-align: center; padding: 8px;">Comentario</th>
+            <th style="border: 1px solid black; text-align: center; padding: 8px;">Accion</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for transaction in transactions %}
+          <tr>
+            <td style="border: 1px solid black; text-align: center; padding: 8px;">{{transaction.author}}</td>
+            <td style="border: 1px solid black; text-align: center; padding: 8px;">{{transaction.date}}</td>
+            <td style="border: 1px solid black; text-align: center; padding: 8px;">{{transaction.transaction_type}}</td>
+            {% if transaction.transaction_type == 'E' %}
+                <td style="border: 1px solid black; text-align: center; padding: 8px;">-${{transaction.amount}}</td>
+            {% elif transaction.transaction_type == 'I' %}
+                <td style="border: 1px solid black; text-align: center; padding: 8px;">${{transaction.amount}}</td>
+            {% endif %}
+            <td style="border: 1px solid black; text-align: center; padding: 8px;">{{transaction.comment}}</td>
+            <td style="border: 1px solid black; text-align: center; padding: 8px;"><a href="{% url 'Modificar Transaccion' transaction.id %}">Editar</a></td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+
+    <a href="{% url 'HomePage' %}">Volver al Home.</a> <br>
+    <a href="{% url 'Agregar Transacciones' %}">Añadir transacción.</a>
+
+
+{% endblock %}
