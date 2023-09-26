@@ -1,18 +1,17 @@
-# Grupo 8 - Los Spaghetis
+# Proyecto de Software realizado en grupo
 
 ### Integrantes: 
 - Benjamín San Martin V
-- Felipe Olivares 
-- Rodrigo Hidalgo 
-- Sebastián Moreno 
-- Vicente Lepe    
+- Felipe Olivares (@FelipeFbh)
+- Rodrigo Hidalgo (@RoronoaRoro)
+- Sebastián Moreno (@Sebamon2040)
+- Vicente Lepe (@VicenteLepe)
 
 
 ### Curso: CC4101-1 Ingeniería de Software
 
 
 ### Profesora : Jocelyn Simmonds
-
 
 ## Requerimientos
 - Python 3.11.2
