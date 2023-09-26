@@ -1,0 +1,40 @@
+.bienvenida {
+    background-color: rgb(180, 180, 180);
+    color: black;
+    font-size: 30px;
+    font-weight: 550;
+    text-align: center;
+}
+
+.slogan {
+    color: black;
+    font-size: 28px;
+    font-weight: 550;
+    text-align: center;
+}
+
+.advertencia {
+    background-color: rgb(255, 90, 90);
+    color: black;
+    font-size: 15px;
+    font-weight: 550;
+    text-align: center;
+}
+
+.texto-productos {
+    color: black;
+    font-size: 30px;
+    font-weight: 550;
+    text-align: center;
+    margin-top: 40px;
+}
+
+@media (max-width: 768px) {
+	.bienvenida, .texto-productos  {
+        font-size: 25px;
+    }
+
+    .slogan {
+        font-size: 22px;
+    }
+}

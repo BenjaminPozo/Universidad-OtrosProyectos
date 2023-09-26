@@ -1,0 +1,115 @@
+@import url('https://fonts.googleapis.com/css2?family=Lato&display=swap');
+
+body {
+  padding: 10px;
+  display: block;
+  background-image: linear-gradient(to bottom, #a0d2eb, #e5eaf5, #e5eaf5, #a0d2eb);
+  background-size: cover;
+  font-family: 'Lato';
+  height: 100vh; 
+}
+
+.titulo-cont {
+  padding: 5px;
+  background-color: #494d5f;
+  margin-left: 30%;
+  margin-right: 30%;
+  color: #e5eaf5;
+  text-align: center;
+  border: 1px solid #494d5f;
+  border-radius: 10px;
+  margin-bottom: 20px;
+}
+
+
+.home {
+  background-color: #494d5f;
+  border: 1px solid #494d5f;
+  border-radius: 10px;
+  color: #e5eaf5;
+  padding: 10px;
+  text-decoration: none;
+}
+
+.form-container {
+  max-width: 400px;
+  margin: 0 auto;
+}
+
+.hinchas-form {
+  padding: 20px;
+  padding-top: 10px;
+  background-color: #494d5f;
+  border: 1px solid #494d5f;
+  border-radius: 10px;
+}
+
+.inputs-cont {
+  margin: 10px;
+  color: #e5eaf5;
+}
+
+.material-symbols-outlined {
+  color: #494d5f;
+  cursor: pointer;
+}
+
+#displayButton {  
+  background-color: #e5eaf5;
+  border: 1px solid #e5eaf5;
+  border-radius: 10px;
+}
+
+#listaDeportes {
+  list-style: none;
+  max-height: 300px; 
+  overflow-y: scroll;
+}
+
+
+select {
+  width: 100%;
+  padding: 5px;
+  margin-top: 5px;
+  background-color: #e5eaf5;
+  border: 1px solid #e5eaf5;
+  border-radius: 10px;
+  font-size: 14px;
+}
+
+.inputs {
+  width: 97%;
+  padding: 5px;
+  background-color: #e5eaf5;
+  border: 1px solid #e5eaf5;
+  border-radius: 10px;
+  font-size: 14px;
+  margin-top: 5px;
+}
+
+textarea {
+  width: 97%;
+  padding: 5px;
+  background-color: #e5eaf5;
+  border: 1px solid #e5eaf5;
+  border-radius: 10px;
+  font-size: 14px;
+  margin-top: 5px;
+  resize: none;
+}
+
+#enviarForm {
+  margin-top: 5px;
+  width: 100%;
+  background-color: #d0bdf4;
+  padding: 10px;
+  font-size: 16px;
+  border: 1px solid #d0bdf4;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+#enviarForm:hover {
+  background-color: #d0bdf48a;
+  border: 1px solid #d0bdf48a;
+}

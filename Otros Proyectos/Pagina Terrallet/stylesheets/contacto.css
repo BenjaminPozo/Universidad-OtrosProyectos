@@ -1,0 +1,111 @@
+.contenedor-contacto {
+    margin-top: 40px;
+    background-color: #373737;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+.pregunta-contacto {
+    font-size: 36px;
+    color: #fefefe;
+    text-align: center;
+}
+
+.contenedor-rss {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    max-width: 600px;
+}
+
+.escribenos-text {
+    font-size: 27px;
+    color: #fefefe;
+    text-align: center;
+}
+
+.contacto-escribenos {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 30px;
+}
+
+.contacto-wsp {
+    display: flex;
+    height: 80px;
+    border: 10px solid #c5c5c5;
+    border-radius: 100px;
+    background-color: #c5c5c5;
+    align-items: center;
+    justify-content: center;
+    width: 200px;
+    text-decoration: none;  
+}
+
+.texto-contacto-wsp {
+    color: black; 
+    font-size: 20px; 
+    font-weight: 400; 
+    text-decoration: none; 
+}
+
+.rss-text {
+    font-size: 23px;
+    color: #fefefe;
+    text-align: center;
+}
+
+.redes-sociales {
+    display: flex;
+}
+
+.rss {
+    display: flex;
+    border: 10px solid #c5c5c5;
+    border-radius: 15px;
+    background-color: #c5c5c5;
+    align-items: center;
+    justify-content: center;
+    margin: 0 15px;
+    height: 60px;
+    width: 60px;
+    text-decoration: none;  
+}
+
+.fa-whatsapp {
+    text-decoration: none;  
+    color: black;
+    font-size: 40px;
+    margin-right: 5px;
+}
+
+.fa-facebook, .fa-instagram {
+    text-decoration: none;  
+    color: black;
+    font-size: 40px;
+}
+
+.email-contacto {
+    width: 400px;
+    padding: 6px;
+}
+
+.form-contacto input, textarea {
+    width: 100%;
+    padding: 6px;
+    outline: none;
+    border: none;
+    margin: 6px 0px;
+}
+
+.enviar-btn {
+    width: 100%;
+    padding: 6px;
+    cursor: pointer;
+}

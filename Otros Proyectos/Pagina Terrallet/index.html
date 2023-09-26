@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Terrallet</title>
+    <link rel="icon" href="./assets/images/logo-blanco-circular.jpg" type="image/jpeg">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="./stylesheets/navbar.css">
+    <link rel="stylesheet" href="./stylesheets/image-slider.css">
+    <link rel="stylesheet" href="./stylesheets/cards.css">
+    <link rel="stylesheet" href="./stylesheets/index.css">
+    <link rel="stylesheet" href="./stylesheets/contacto.css">
+</head>
+<body>
+    <h1 class="advertencia">
+        Este sitio web se encuentra actualmente en desarrollo. Algunas funcionalidades podrían no funcionar correctamente en este momento.
+        <br>
+        Si tienes alguna duda o consulta, por favor, no dudes en contactarnos a través de los medios disponibles. 
+        <br>
+        <a href="#contacto-id">Haz clic aquí para ir al contacto</a>
+    </h1>
+    <!-- Inicio navbar -->
+    <div class="navbar">
+        <span class="nombre">Terrallet</span>
+        <div class="navbar-hud">
+            <a href="#" class="texto-hud"><i class="fas fa-tv"></i> Productos</a>
+            <a href="#" class="texto-hud"><i class="far fa-user"></i> Proyectos</a>
+            <a href="#" class="texto-hud"><i class="fab fa-gripfire"></i> Terrallet</a>
+            <a href="#" class="texto-hud"><i class="far fa-comments"></i> Contacto</a>
+        </div>
+    </div>
+
+    <label>
+        <input type="checkbox" class="hamburguesa">
+        <div class="contenedor-cel">
+            <div class="toggle">
+                <span class="top_line common"></span>
+                <span class="mid_line common"></span>
+                <span class="bot_line common"></span>
+            </div>
+            <a class="anombre" href="#"><span class="nombre-cel">Terrallet</span></a>
+        </div>
+        <div class = 'slide'>
+            <ul>
+                <li><a href="#"><i class="fas fa-tv"></i>Productos</a></li>
+                <li><a href="#"><i class="far fa-user"></i>Proyectos</a></li>
+                <li><a href="#"><i class="fab fa-gripfire"></i>Terrallet</a></li>
+                <li><a href="#"><i class="far fa-comments"></i>Contacto</a></li>
+            </ul>
+        </div>
+    </label>
+    <!-- Fin navbar -->
+    <h1 class="bienvenida">¡Bienvenido a Terrallet!</h1>
+    <h1 class="slogan">Transforma y moderniza todos tus espacios</h1>
+    <!-- Inicio slider -->
+    <section class="container">
+        <div class="slider-wrapper">
+            <button class="prev-btn">&lt;</button>
+            <div class="slider">
+                <img id="slide-1" src="./assets/images/cierre.jpg" alt="cierre">
+                <img id="slide-2" src="./assets/images/toldo.jpg" alt="toldo">
+                <img id="slide-3" src="./assets/images/seguridad.jpg" alt="seguridad">
+                <img id="slide-4" src="./assets/images/roller.jpg" alt="roller">
+            </div>
+            <button class="next-btn">&gt;</button>
+            <div class="slider-nav">
+                <a href="#slide-1"></a>
+                <a href="#slide-2"></a>
+                <a href="#slide-3"></a>
+                <a href="#slide-4"></a>
+            </div>
+        </div>
+    </section>
+    <!-- Fin slider -->
+
+    <!-- Inicio cartas -->
+    <h1 class="texto-productos">Nuestros productos:</h1>
+
+    <div class="container-card">
+        <div class="card">
+            <figure>
+                <img src="./assets/images/cierre.jpg">
+            </figure>
+            <div class="contenido-card">
+                <span>Cierres Panorámicos</span>
+            </div>
+        </div>
+        <div class="card">
+            <figure>
+                <img src="./assets/images/roller.jpg">
+            </figure>
+            <div class="contenido-card">
+                <span>Cortinas Roller</span>
+            </div>
+        </div>
+        <div class="card">
+            <figure>
+                <img src="./assets/images/seguridad.jpg">
+            </figure>
+            <div class="contenido-card">
+                <span>Persianas de seguridad</span>
+            </div>
+        </div>
+        <div class="card">
+            <figure>
+                <img src="./assets/images/toldo.jpg">
+            </figure>
+            <div class="contenido-card">
+                <span>Toldos proyectantes</span>
+            </div>
+        </div>
+    </div>
+    <!-- Fin cartas -->
+
+    <!-- Inicio contacto -->
+    <div class="contenedor-contacto" id="contacto-id">
+        <div class="pregunta-contacto">¿Te gusta lo que ves? ¡Cotiza con nosotros!</div>
+        <div class="contenedor-rss">
+            <div class="contacto-escribenos">
+                <div class="escribenos-text">¡Escríbenos!</div>
+                <a href="https://api.whatsapp.com/send/?phone=56986024443&text&type=phone_number&app_absent=0" class="contacto-wsp">
+                    <i class="fa-brands fa-whatsapp"></i>
+                    <div class="texto-contacto-wsp">Whatsapp</div>
+                </a>
+            </div>
+            <div class="rss-text">¡Síguenos en nuestras redes sociales!</div>
+            <div class="redes-sociales">
+                <a href="https://www.instagram.com/terrallet/" class="rss">
+                    <i class="fa-brands fa-instagram"></i>
+                </a>
+                <a href="https://www.facebook.com/terrallet/" class="rss">
+                    <i class="fa-brands fa-facebook"></i>
+                </a>
+            </div>
+        </div>
+        <!--
+        <div class="email-contacto">
+            <form method="post" class="form-contacto">
+                <input type="text" placeholder="Nombre" id="name" autocomplete="off">
+                <input type="email" placeholder="Email" id="email" autocomplete="off">
+                <input type="text" placeholder="Asunto" id="subject" autocomplete="off">
+                <textarea id="message" placeholder="Mensaje" cols="30" rows="10"></textarea>
+                <button class="enviar-btn" id="btn">Enviar</button>
+            </form>
+        </div>
+        -->
+    </div>
+    
+    <!-- Fin contacto -->
+
+    <!-- Scripts -->
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const slider = document.querySelector(".slider");
+            const sliderNav = document.querySelector(".slider-nav");
+            const slides = slider.querySelectorAll("img");
+            const navLinks = sliderNav.querySelectorAll("a");
+            const prevBtn = document.querySelector(".prev-btn");
+            const nextBtn = document.querySelector(".next-btn");
+            let currentSlideIndex = 0;
+    
+            function goToSlide(index) {
+                slides[index].scrollIntoView({ behavior: "smooth" });
+                navLinks.forEach((link, i) => {
+                    link.classList.toggle("active", i === index);
+                });
+                currentSlideIndex = index;
+            }
+    
+            function goToPrevSlide() {
+                const prevSlideIndex = (currentSlideIndex - 1 + slides.length) % slides.length;
+                goToSlide(prevSlideIndex);
+            }
+    
+            function goToNextSlide() {
+                const nextSlideIndex = (currentSlideIndex + 1) % slides.length;
+                goToSlide(nextSlideIndex);
+            }
+    
+            prevBtn.addEventListener("click", function () {
+                goToPrevSlide();
+            });
+    
+            nextBtn.addEventListener("click", function () {
+                goToNextSlide();
+            });
+    
+            navLinks.forEach((link, index) => {
+                link.addEventListener("click", function (event) {
+                    event.preventDefault();
+                    goToSlide(index);
+                });
+            });
+        });
+    </script>
+    
+</body>
+</html>
