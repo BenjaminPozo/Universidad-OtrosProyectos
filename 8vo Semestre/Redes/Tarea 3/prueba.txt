@@ -1,0 +1,7 @@
+Esto es un archivo de prueba
+hola1
+chao1
+hola2
+chao2
+hola3
+chao3
