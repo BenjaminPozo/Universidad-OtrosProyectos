@@ -27,10 +27,9 @@ class SocketTCP:
     self.direccionOrigen = address
 
   def connect(self, address):
-    self.secuencia = rn.randint(1, 99).encode()
+    self.secuencia = rn.randint(1, 99)
     handshakeMsj1 = self.create_segment([1, 0, 0, self.secuencia, b''])
     self.socketUDP.sendto(handshakeMsj1, address)
-
     rcvMsj, _ = self.socketUDP.recvfrom(100)
     handshakeMsj2 = self.parse_segment(rcvMsj)
     if handshakeMsj2[0] == 1 and handshakeMsj2[1] == 1 and handshakeMsj2[3] == self.secuencia + 1:
@@ -50,12 +49,14 @@ class SocketTCP:
 
       rcvMsj2, _ = self.socketUDP.recvfrom(100)
       handshakeMsj3 = self.parse_segment(rcvMsj2)
-
       if handshakeMsj3[0] == 0 and handshakeMsj3[1] == 1 and handshakeMsj3[3] == self.secuencia + 1:
         self.direccionDestino = address
-
+        new_socket = SocketTCP()
+        new_address = ('127.0.0.1', address[1] + 1)
+        new_socket.bind(new_address)
+        return new_socket, new_address
 
 #[SYN]|||[ACK]|||[FIN]|||[SEQ]|||[DATOS]
-miSocket = SocketTCP()
+'''miSocket = SocketTCP()
 coso = miSocket.parse_segment(b'1|||0|||0|||')
-print(miSocket.create_segment(coso))
+print(miSocket.create_segment(coso))'''

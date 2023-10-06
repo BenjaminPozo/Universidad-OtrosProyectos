@@ -1,3 +1,10 @@
+import socketTCP
+
+address = ('127.0.0.1', 8000)
+client_socketTCP = socketTCP.SocketTCP()
+client_socketTCP.connect(address)
+
+'''
 import socket
 lineas = ''
 socket_cliente = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
@@ -30,3 +37,4 @@ socket_cliente.sendto(b'$$FIN$$         ', ('localhost', 8000))
 
 msg, _ =socket_cliente.recvfrom(1000)
 print(msg.decode())
+'''
