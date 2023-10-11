@@ -3,8 +3,8 @@ import socketTCP
 address = ('127.0.0.1', 8000)
 server_socketTCP = socketTCP.SocketTCP()
 server_socketTCP.bind(address)
-connection_socketTCP, new_address = server_socketTCP.accept()
-print(new_address)
+connection_socketTCP, new_address = server_socketTCP.accept() 
+print(connection_socketTCP.direccion)
 
 '''import socket
 
