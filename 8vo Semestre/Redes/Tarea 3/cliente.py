@@ -3,8 +3,17 @@ import socketTCP
 address = ('127.0.0.1', 8000)
 client_socketTCP = socketTCP.SocketTCP()
 client_socketTCP.connect(address)
-print(client_socketTCP.direccionConexion)
 
+message = "Mensje de len=16".encode()
+client_socketTCP.send(message)
+
+message = "Mensaje de largo 19".encode()
+client_socketTCP.send(message)
+
+message = "Mensaje de largo 19".encode()
+client_socketTCP.send(message)
+
+client_socketTCP.close()
 '''
 import socket
 lineas = ''

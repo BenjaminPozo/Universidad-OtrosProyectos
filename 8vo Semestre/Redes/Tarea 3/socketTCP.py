@@ -7,6 +7,7 @@ class SocketTCP:
     self.direccionConexion = None
     self.direccion = None
     self.secuencia = None
+    self.msj = b''
 
   def parse_segment(self, msj):
     msjDividido = msj.split(b'|||')
@@ -27,44 +28,238 @@ class SocketTCP:
     self.direccion = address
 
   def connect(self, address):
-    self.secuencia = rn.randint(1, 99)
+    self.secuencia = rn.randint(100, 200)
     handshakeMsj1 = self.create_segment([1, 0, 0, self.secuencia, b''])
-    self.socketUDP.sendto(handshakeMsj1, address)
-    rcvMsj, new_address = self.socketUDP.recvfrom(100)
-    handshakeMsj2 = self.parse_segment(rcvMsj)
-    if handshakeMsj2[0] == 1 and handshakeMsj2[1] == 1 and handshakeMsj2[3] == self.secuencia + 1:
-      self.secuencia += 2
-      handshakeMsj3 = self.create_segment([0, 1, 0, self.secuencia, b''])
-      self.socketUDP.sendto(handshakeMsj3, new_address)
-      self.direccionConexion = new_address
+    while True:
+      try:
+        self.socketUDP.sendto(handshakeMsj1, address)
+        self.socketUDP.settimeout(5)
+        rcvMsj, new_address = self.socketUDP.recvfrom(100)
+        handshakeMsj2 = self.parse_segment(rcvMsj)
+        if handshakeMsj2[0] == 1 and handshakeMsj2[1] == 1 and handshakeMsj2[3] == self.secuencia + 1:
+          self.secuencia += 2
+          handshakeMsj3 = self.create_segment([0, 1, 0, self.secuencia, b''])
+          self.socketUDP.sendto(handshakeMsj3, new_address)
+          self.direccionConexion = new_address
+          print('Conexión establecida con ', self.direccionConexion)
+          break
+      except TimeoutError: continue
 
   def accept(self):
-    rcvMsj, address = self.socketUDP.recvfrom(100)
-    new_socket = SocketTCP()
-    taken_address = True
-    i = 1
-    while taken_address:
+    while True:
+        try:
+            self.socketUDP.settimeout(5)
+            rcvMsj, address = self.socketUDP.recvfrom(100)
+            new_socket = SocketTCP()
+            taken_address = True
+            i = 1
+            while taken_address:
+                try:
+                    new_address = ('127.0.0.1', address[1] + i)
+                    new_socket.bind(new_address)
+                    taken_address = False
+                except OSError:
+                    i += 1
+            handshakeMsj1 = self.parse_segment(rcvMsj)
+
+            if handshakeMsj1[0] == 1:
+                new_socket.secuencia = handshakeMsj1[3] + 1
+                handshakeMsj2 = new_socket.create_segment([1, 1, 0, new_socket.secuencia, b''])
+                while True:
+                    try:
+                        new_socket.socketUDP.sendto(handshakeMsj2, address)
+                        new_socket.socketUDP.settimeout(5)
+                        rcvMsj2, _ = new_socket.socketUDP.recvfrom(100)
+                        handshakeMsj3 = new_socket.parse_segment(rcvMsj2)
+                        if handshakeMsj3[0] == 0 and handshakeMsj3[1] == 1 and handshakeMsj3[3] == new_socket.secuencia + 1:
+                            new_socket.direccionConexion = address
+                            new_socket.secuencia += 1
+                            print('Conexión establecida con ', new_socket.direccionConexion, ' desde ', new_socket.direccion)
+                            return new_socket, new_socket.direccion
+                    except TimeoutError:
+                        continue
+        except TimeoutError: continue
+
+  def send(self, message):
+    primer_msg = self.create_segment([0,0,0, self.secuencia, str(len(message)).encode()])
+    while True:
       try:
-        new_address = ('127.0.0.1', address[1] + i)
-        taken_address = False
-      except OSError:
-        i += 1
-    new_socket.bind(new_address)
-    handshakeMsj1 = self.parse_segment(rcvMsj)
+        self.socketUDP.sendto(primer_msg, self.direccionConexion)
+        self.socketUDP.settimeout(10)
+        primer_rcv, _ = self.socketUDP.recvfrom(100)
+        parse_primer_rcv = self.parse_segment(primer_rcv)
+        if parse_primer_rcv[1] == 1:
+          self.secuencia += len(str(len(message)).encode())
+          break
+        else: continue
+      except TimeoutError: continue
 
-    if handshakeMsj1[0] == 1:
-      new_socket.secuencia = handshakeMsj1[3] + 1
-      handshakeMsj2 = new_socket.create_segment([1, 1, 0, new_socket.secuencia, b''])
-      new_socket.socketUDP.sendto(handshakeMsj2, address)
+    largo = len(message)
 
-      rcvMsj2, _ = new_socket.socketUDP.recvfrom(100)
-      handshakeMsj3 = new_socket.parse_segment(rcvMsj2)
-      if handshakeMsj3[0] == 0 and handshakeMsj3[1] == 1 and handshakeMsj3[3] == new_socket.secuencia + 1:
-        new_socket.direccionConexion = address
+    if largo < 16:
+      msj = self.create_segment([0,0,0,self.secuencia, message])
+      while True:
+        try:
+          self.socketUDP.sendto(msj, self.direccionConexion)
+          self.socketUDP.settimeout(5)
+          rcv, _ = self.socketUDP.recvfrom(100)
+          parse_rcv = self.parse_segment(rcv)
+          if parse_rcv[1] == 1:
+            self.secuencia += largo
+            break
+          else: continue
+        except TimeoutError: continue
+
+    else:    
+      if largo%16 == 0:
+        n_iteraciones = largo//16
+      else:
+        n_iteraciones = (largo//16) + 1
+
+      trozos_mensaje = []
+      i = 0
+
+      while i < n_iteraciones:
+        bytes_restantes = largo - (i * 16)
+        if bytes_restantes >= 16:
+          trozos_mensaje.append(message[i*16:(i+1)*16])
+        else:
+          trozos_mensaje.append(message[i*16:])
+        i+=1
+
+      print(trozos_mensaje)
+
+      for trozo in trozos_mensaje:
+        msj_i = self.create_segment([0,0,0,self.secuencia, trozo])
+        while True:
+          try:  
+            self.socketUDP.sendto(msj_i, self.direccionConexion)
+            self.socketUDP.settimeout(5)
+            rcv_i, _ = self.socketUDP.recvfrom(100)
+            parse_rcv_i = self.parse_segment(rcv_i)
+            if parse_rcv_i[1] == 1:
+              self.secuencia += len(trozo)
+              break
+            else: continue
+          except TimeoutError: continue
+
+  def recv(self, buffer_size):
+    if self.msj == b'':
+      while True:
+        try:
+          self.socketUDP.settimeout(5)
+          primer_mensaje, _ = self.socketUDP.recvfrom(18 + 16)
+          primer_mensaje_parse = self.parse_segment(primer_mensaje)
+
+          if primer_mensaje_parse[3] == self.secuencia:
+            self.secuencia += len(primer_mensaje_parse[4])
+            env_primer_mensaje = self.create_segment([0, 1, 0, self.secuencia, b''])
+            self.socketUDP.sendto(env_primer_mensaje, self.direccionConexion)
+            largo = int(primer_mensaje_parse[4].decode())
+            break
+          elif primer_mensaje_parse[3] < self.secuencia:
+            env_primer_mensaje = self.create_segment([0, 1, 0, self.secuencia, b''])
+            self.socketUDP.sendto(env_primer_mensaje, self.direccionConexion)
+            largo = int(primer_mensaje_parse[4].decode())
+            break
+          else: continue
+        except TimeoutError: continue
+
+      if largo % 16 == 0:
+        n_iteraciones = largo//16
+      else:
+        n_iteraciones = (largo//16) +1
+      
+      msj_recibido = b''
+      i = 0
+
+      while i < n_iteraciones:
+        while True:
+          try:
+            self.socketUDP.settimeout(5)
+            rcv_mensaje, _ = self.socketUDP.recvfrom(18 + 16)
+            rcv_mensaje_parse = self.parse_segment(rcv_mensaje)
+
+            if rcv_mensaje_parse[3] == self.secuencia:
+              self.secuencia += len(rcv_mensaje_parse[4])
+              enviar = self.create_segment([0,1,0,self.secuencia, b''])
+              self.socketUDP.sendto(enviar, self.direccionConexion)
+              msj_recibido += rcv_mensaje_parse[4]
+              i+=1
+              break
+
+            elif rcv_mensaje_parse[3] < self.secuencia:
+              enviar = self.create_segment([0,1,0,self.secuencia, b''])
+              self.socketUDP.sendto(enviar, self.direccionConexion)
+              break
+
+            else: continue
+          except TimeoutError: continue
+
+      if largo <= buffer_size:
+        return msj_recibido
+      else:
+        self.msj = msj_recibido[buffer_size:]
+        return msj_recibido[:buffer_size]
         
-        return new_socket, new_socket.direccion
+    else:
+      if buffer_size < len(self.msj):
+        return self.msj[:buffer_size]
+      else:
+        msj = self.msj
+        self.msj = b''
+        return msj
+      
+  def close(self):
+    msj_termino = self.create_segment([0,0,1,self.secuencia, b''])
+    while True:
+      try:
+        self.socketUDP.sendto(msj_termino, self.direccionConexion)
+        self.socketUDP.settimeout(5)
+        msj_termino2, _ = self.socketUDP.recvfrom(100)
+        msj_termino2_parse = self.parse_segment(msj_termino2)
+        if msj_termino2_parse[1] == 1 and msj_termino2_parse[2] == 1 and msj_termino2_parse[3] == self.secuencia + 1:
+          self.secuencia += 2
+          msj_termino3 = self.create_segment([0,1,0,self.secuencia, b''])
+          self.socketUDP.sendto(msj_termino3, self.direccionConexion)
+          self.socketUDP.close()
+          print('Conexión cerrada con: ', self.direccionConexion)
+          break
+        else: continue
+      except TimeoutError:
+        continue
+  
+  def recv_close(self):
+    max_errores = 5
+    cant_errores = 0
+    while cant_errores < max_errores:
+      try:
+        self.socketUDP.settimeout(5)
+        msj_termino1, _ = self.socketUDP.recvfrom(100)
+        msj_termino1_parse = self.parse_segment(msj_termino1)
+        if msj_termino1_parse[2] == 1 and msj_termino1_parse[3] == self.secuencia:
+          self.secuencia += 1
+          msj_termino2 = self.create_segment([0,1,1,self.secuencia,b''])
+          cant_errores = 0
+          while True:
+            try:
+              self.socketUDP.sendto(msj_termino2, self.direccionConexion)
+              msj_termino3, _ = self.socketUDP.recvfrom(100)
+              msj_termino3_parse = self.parse_segment(msj_termino3)
+              if msj_termino3_parse[1] == 1 and msj_termino3_parse[3] == self.secuencia + 1:
+                self.socketUDP.close()
+                print('Conexión cerrada con ', self.direccionConexion)
+                return
+              else: return
+            except TimeoutError: 
+              cant_errores += 1
+              if cant_errores == max_errores:
+                self.socketUDP.close()
+                print('Conexión cerrada con ', self.direccionConexion)
+                break
+              continue
+      except TimeoutError: 
+        cant_errores += 1
+        continue
 
-#[SYN]|||[ACK]|||[FIN]|||[SEQ]|||[DATOS]
-'''miSocket = SocketTCP()
-coso = miSocket.parse_segment(b'1|||0|||0|||')
-print(miSocket.create_segment(coso))'''
+#[SYN]|||[ACK]|||[FIN]|||[SEQ]|||[DATOS]: 
