@@ -1,0 +1,171 @@
+#lang play
+(print-only-errors)
+
+;; PARTE 1A, 1B, 1F
+
+#|
+  Expr ::= ...
+|#
+(deftype Expr
+  ;; core
+  (num n)
+  (add l r)
+  (sub l r)
+  (mul l r)
+  (tt)
+  (ff)
+  (leq lexpr rexpr)
+  (ifc c expr1 expr2)
+  (id x)
+  (fun arg body)
+  (app f-name f-args)
+  )
+
+;; parse :: ...
+(define (parse s-expr)
+  
+  (match s-expr
+    [n #:when (number? n) (num n)] 
+    [(list '+ l r) (add (parse l) (parse r))]
+    [(list '- l r) (sub (parse l) (parse r))]
+    [(list '* l r) (mul (parse l) (parse r))]
+    [#t (tt)]
+    [#f (ff)]
+    [(list '<= l r) (leq (parse l) (parse r))]
+    [(list 'if c l r) (ifc (parse c) (parse l) (parse r))]
+    [x #:when (symbol? x) (id x)]
+    [(list 'fun x b) (fun x (parse b))]
+    [(list f elems ...) (app (parse f) (map parse elems))]
+    )
+  )
+
+;; PARTE 1C, 1G
+
+(deftype Val
+  (numV n)
+  (boolV b)
+  (closureV id body env)
+  )
+
+;; ambiente de sustitución diferida
+(deftype Env
+  (mtEnv)
+  (aEnv id val env))
+
+;; interface ADT (abstract data type) del ambiente
+(define empty-env (mtEnv))
+
+;; "Simplemente" asigna un nuevo identificador para aEnv
+;(define extend-env aEnv)
+;;
+;; es lo mismo que definir extend-env así:
+;; (concepto técnico 'eta expansion')
+(define (extend-env id val env) (aEnv id val env))
+
+(define (env-lookup x env)
+  (match env
+    [(mtEnv) (error 'env-lookup "free identifier: ~a" x)]
+    [(aEnv id val rest) (if (symbol=? id x) val (env-lookup x rest))]))
+
+;; PARTE 1D
+
+;; num2num-op :: ...
+(define (num2num-op o)
+  (define (fn x y)
+        (match x
+          [(numV n)
+           (if (number? n)
+               (match y
+                 [(numV m)
+                  (if (number? m)
+                      (match o
+                        [+ (numV (+ n m))]
+                        [- (numV (- n m))]
+                        [* (numV (* n m))]
+                        )
+                      (error "num-op: invalid operands")
+                      )
+                  ]
+                 [else (error "num-op: invalid operands")])
+               (error "num-op: invalid operands")
+               )
+           ]
+          [else (error "num-op: invalid operands")]))
+      fn
+  )
+
+(define num+ (num2num-op +))
+(define num- (num2num-op -))
+(define num* (num2num-op *))
+
+;; num2bool-op :: ...
+(define (num2bool-op o)
+  (define (fn x y)
+        (match x
+          [(numV n)
+           (if (number? n)
+               (match y
+                 [(numV m)
+                  (if (number? m)
+                      (match o
+                        [<= (boolV (<= n m))]
+                        )
+                      (error "num-op: invalid operands")
+                      )
+                  ]
+                 [else (error "num-op: invalid operands")])
+               (error "num-op: invalid operands")
+               )
+           ]
+          [else (error "num-op: invalid operands")]))
+      fn
+  )
+
+(define num<= (num2bool-op <=))
+
+
+;; PARTE 1E, 1G
+
+;; eval :: ...
+(define (eval expr env)
+  (define (env-extender the-a the-l the-env)
+    (match the-l
+      [(list x elems ...)
+       (if elems
+           (env-extender the-a elems the-env)
+           (extend-env the-a x the-env)
+           )
+       ]
+      )
+    )
+  (match expr
+    [(num n) (numV n)]
+    [(id x) (env-lookup x env)]
+    [(fun arg body) (closureV arg body env)]
+    [(add l r) (num+ (eval l env) (eval r env))]
+    [(sub l r) (num- (eval l env) (eval r env))]
+    [(mul l r) (num* (eval l env) (eval r env))]
+    [(leq l r) (num<= (eval l env) (eval r env))]
+    [(ifc c l r) (if (equal? (boolV #t) (eval c env))
+                     (eval l env)
+                     (eval r env)
+                     )]
+    [(app f e) (def (closureV the-arg the-body the-claus-env) (eval f env))
+               (def the-ext-env (env-extender the-arg (eval e env) the-claus-env))
+               (eval the-body the-ext-env)
+               ]
+    )
+  )
+(eval (app (id 'f) (list (num 2) (num 2))) (aEnv 'f (closureV (list 'x 'y)  (parse '(+ x y)) (mtEnv)) (mtEnv)))
+
+;; PARTE 2A
+
+(define swap* '???)
+(define curry* '???)
+(define uncurry* '???)
+(define partial* '???)
+
+;; PARTE 2B
+
+;; run :: ...
+(define (run) '???)

@@ -227,6 +227,7 @@ while True:
             #Creamos la dirección con puerto 80
             address = (url, 80)
             #Nos conectamos
+            print(address)
             client_like_socket.connect(address)
             #Creamos un mensaje http con is_forbbiden Falso
             client_send_msg = create_HTTP_message(new_msg, False)

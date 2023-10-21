@@ -1,0 +1,40 @@
+#lang play
+(require "T2.rkt")
+
+(print-only-errors #t)
+
+(test (eval (parse '(+ 1 2)) '()) (numV 3))
+
+(test (eval (parse '(- 3 2)) '()) (numV 1))
+
+(test (eval (parse '(* 1 2)) '()) (numV 2))
+
+(test (eval (parse '(<= 5 3)) '()) (boolV #f))
+
+(test (eval (parse '(<= 3 5)) '()) (boolV #t))
+
+(test (eval (parse '( if (<= 3 5) 2 4)) '()) (numV 2)) 
+ 
+(test (eval (parse '( if (<= 6 2) 2 5)) '()) (numV 5))  
+
+;; necesito testear la definicion de funciones con 0 , 1 y mas args
+
+(test( eval  (parse '(fun (x y) (+ x y))) '()) (closureV (list 'x 'y) (add (id 'x)  (id 'y)) '())) 
+
+(test( eval  (parse '(fun (x y z) (-(+ x y) z))) '()) (closureV (list 'x 'y 'z) (sub (add (id 'x)  (id 'y)) (id 'z)) '())) 
+
+;; necesito revidsar este test
+(test( eval  (parse '(fun '() 1))  '()) (closureV ''() (num 1) '())) 
+
+(test( eval  (parse '(fun (x) (+ x 1))) '()) (closureV (list 'x) (add (id 'x)  (num 1)) '())) 
+
+;; y la aplicacion de estas mismas
+;; cuando testeo una aplicacion de funciones, debo pasarle el id que representa a la funcion
+;; la lista de los argumentos
+;; el ambiente en el que tenemos definida la función 
+ 
+(test (eval (app (id 'f) (list (num 2) (num 2))) (aEnv 'f (closureV (list 'x 'y)  (parse '(+ x y)) (mtEnv)) (mtEnv))) (numV 4))
+ 
+
+
+(test (eval (app (id 'funcion) (list (num 4))) (aEnv 'funcion (closureV (list 'x)  (parse '(+ x 1)) (mtEnv)) (mtEnv))) (numV 5))
