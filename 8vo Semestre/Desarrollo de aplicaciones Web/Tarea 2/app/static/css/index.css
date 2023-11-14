@@ -1,0 +1,70 @@
+@import url('https://fonts.googleapis.com/css2?family=Lato&display=swap');
+
+body {
+  display: flex;
+  background-image: linear-gradient(to bottom, #a0d2eb, #e5eaf5, #e5eaf5, #a0d2eb);
+  background-size: cover;
+  background-repeat: no-repeat;
+  font-family: 'Lato';
+  justify-content: center;
+  align-items: center;
+  height: 100vh; 
+}
+
+.contenedor-general {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.contenedor-titulo {
+  background-color: #494d5f;
+  padding: 20px;
+  border: 1px;
+  border-radius: 10px;
+  justify-content: center;
+  text-align: center;
+  margin: 10px;
+}
+
+.titulo {
+  font-size: 50px;
+  color: white;
+}
+
+.contenedor-botones {
+  background-color: #494d5f;
+  padding: 20px;
+  border: 1px;
+  border-radius: 10px;
+  justify-content: center;
+  text-align: center;
+  margin: 10px;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-gap: 10px;
+}
+
+.boton {
+  font-size: 20px;
+  padding: 5px;
+  border-radius: 10px;
+  text-decoration: None;
+  margin: 10px;
+}
+
+.boton:hover {
+  opacity: calc(75%);
+}
+
+.hincha {
+  color: black;
+  background-color: #e5eaf5;
+  border: 1px solid #e5eaf5;
+}
+
+.artesano {
+  color: black;
+  background-color: #d0bdf4;
+  border: 1px solid #d0bdf4;
+}
