@@ -1,2 +1,3 @@
 # Universidad - Otros Proyectos
-Basicamente todo u related
+
+Este repositorio tiene como objetivo compartir proyectos y tareas interesantes de mi experiencia universitaria, así como algunos proyectos externos y personales que considero relevantes.
