@@ -1,0 +1,78 @@
+{% extends './base.html' %}
+
+{% block css %}
+    <link rel="stylesheet" href="{{ url_for('static', filename = 'css/informacion-hincha.css') }}">
+{% endblock %}
+
+{% block body %}
+
+<a href="/" class="home">Volver al Home</a>
+<a href="/ver-hinchas" class="home">Volver a Hinchas</a>
+<div class="titulo-cont">
+  <h1>Informacion Hincha</h1>
+</div>
+
+<div class="contenedor-tabla">
+  <table class="tabla-hincha">
+    <tbody id="informacion-hincha">
+      <tr>  
+        <td class="encabezado"><strong>Nombre</strong></td>
+        <td id="nombre" class="valor">
+          {{ hincha_info[1] }}
+        </td>
+      </tr>
+      <tr>  
+        <td class="encabezado"><strong>Región</strong></td>
+        <td id="region" class="valor">
+          {{ hincha_info[2] }}
+        </td>
+      </tr>
+      <tr>  
+        <td class="encabezado"><strong>Comuna</strong></td>
+        <td id="comuna" class="valor">
+          {{ hincha_info[3] }}
+        </td>
+      </tr>
+      <tr>  
+        <td class="encabezado"><strong>Deportes</strong></td>
+        <td id="deportes" class="valor">
+          {{ hincha_info[8] }}
+        </td>
+      </tr>
+      <tr>  
+        <td class="encabezado"><strong>Tipo de Transporte</strong></td>
+        <td id="transporte" class="valor" style="text-transform: capitalize;">
+          {{ hincha_info[4] }}
+        </td>
+      </tr>
+      <tr>  
+        <td class="encabezado"><strong>Email</strong></td>
+        <td id="email" class="valor">
+          {{ hincha_info[5] }}
+        </td>
+      </tr>
+      <tr>  
+        <td class="encabezado"><strong>Número de celular</strong></td>
+        <td id="celular" class="valor">
+          {% if not hincha_info[6] %}
+            <span style="color: red;">No hay datos</span>
+          {% else %}
+            {{ hincha_info[6] }}
+          {% endif %}
+        </td>
+      </tr>
+      <tr>  
+        <td class="encabezado"><strong>Comentario adicional</strong></td>
+        <td id="comentario" class="valor">
+          {% if not hincha_info[7] %}
+            <span style="color: red;">No hay comentarios</span>
+          {% else %}
+            {{ hincha_info[7] }}
+          {% endif %}
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+{% endblock %}

@@ -1,0 +1,86 @@
+{% extends './base.html' %}
+
+{% block css %}
+    <link rel="stylesheet" href="{{ url_for('static', filename = 'css/registrar-hincha.css') }}">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0">
+{% endblock %}
+
+{% block body %}
+    <a href="/" class="home">Volver al Home</a>
+    <div class="titulo-cont">
+        <h1>Formulario de Hinchas</h1>
+    </div>
+    <div class="form-container">
+        <form id="hinchas-form" class="hinchas-form" action="{{url_for('post_hincha')}}" method="post" enctype="multipart/form-data">
+            
+            <div id="region-input" class="inputs-cont">
+                <label for="selectRegion">Región:</label>
+                <select id="selectRegion" name="selectRegion" class="select-region">
+                    <option value="none">Selecciona una región</option>
+                    {% for region in data.regiones %}
+                    <option value="{{ region }}"> {{ region }} </option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <div id="comuna-input" class="inputs-cont">
+                <label for="selectComuna">Comuna:</label>
+                <select id="selectComuna" name="selectComuna" class="select-comuna">
+                </select>
+            </div>
+
+            <div id="deportes-input" class="inputs-cont">
+                <label for="displayButton">Selecciona los deportes  </label>
+                <button type="button" id="displayButton">
+                    <span id="icon" class="material-symbols-outlined">
+                        expand_more
+                    </span>
+                </button>
+                <ul id="listaDeportes" style="display: none;">
+                    {% for deporte in data.deportes %}
+                        <li><input type="checkbox" name="deporte" value="{{ deporte }}"><span>{{ deporte }}</span></li>
+                    {% endfor %}
+                </ul>
+            </div>
+
+
+            <div id="transporte-input" class="inputs-cont">
+                <label for="selectTransporte">Modo de transporte:</label>
+                <select id="selectTransporte" name="selectTransporte" class="select-transporte">
+                    <option value="">Selecciona un Modo de transporte</option>
+                    <option value="1">Particular</option>
+                    <option value="2">Locomoción pública</option>
+                </select>
+            </div>
+
+            <div id="nombre-input" class="inputs-cont">
+                <label for="nombre">Nombre:</label>
+                <input id="nombre" name="nombre" type="text" class="inputs">
+            </div>
+
+            <div id="email-input" class="inputs-cont">
+                <label for="email">Email:</label>
+                <input id="email" name="email" type="email" placeholder="ejemplo@gmail.com" class="inputs">
+            </div>
+
+            <div id="celular-input" class="inputs-cont">
+                <label for="celular">Número celular:</label>
+                <input id="celular" name="celular" type="text" placeholder="+569 1234 5678" class="inputs">
+            </div>
+            
+            <div id="adicional-input" class="inputs-cont">
+                <label for="adicional">Comentarios Adicionales:</label>
+                <textarea name="adicional" id="adicional" class="inputs"></textarea>
+            </div>
+
+            <div class="botones">
+                <button type="button" id="enviarForm">
+                    Agregar Hincha
+                </button>
+            </div>
+        </form>
+    </div>
+    <script type="module" src="{{ url_for('static', filename = 'js/registrar-hincha.js') }}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+{% endblock %}

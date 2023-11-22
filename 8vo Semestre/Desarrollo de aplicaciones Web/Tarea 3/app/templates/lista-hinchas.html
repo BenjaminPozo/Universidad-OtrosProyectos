@@ -1,0 +1,66 @@
+{% extends './base.html' %}
+
+{% block css %}
+    <link rel="stylesheet" href="{{ url_for('static', filename = 'css/lista-hinchas.css') }}">
+    <link
+    rel="stylesheet"
+    href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" />
+{% endblock %}
+
+{% block body %}
+
+  <a href="/" class="home">Volver al Home</a>
+  <div class="titulo-cont">
+    <h1>Hinchas</h1>
+  </div>
+  <div class="contenedor-tabla">
+    <table class="tabla-hinchas">
+      <thead>
+        <tr>
+          <th>Nombre</th>
+          <th>Comuna</th>
+          <th>Deporte(s)</th>
+          <th>Modo de transporte</th>
+          <th>Número de teléfono</th>
+          <th class="ver-mas"></th>
+        </tr>
+      </thead>
+      <tbody id="listaHinchas">
+        {% for hincha in data.hinchas %}
+            <tr>
+              <td>
+                {{ hincha[1] }}
+              </td>
+              <td>
+                {{ hincha[2] }}
+              </td>
+              <td>
+                {{ hincha[5] }}
+              </td>
+              <td style="text-transform: capitalize;">
+                {{ hincha[3] }}
+              </td>
+              <td>
+                {% if not hincha[4] %}
+                  <span style="color: red;">No hay datos</span>
+                {% else %}
+                  {{ hincha[4] }}
+                {% endif %}
+              </td>
+              <td>
+                <button onclick=window.location.href="{{ url_for('informacion_hincha', hincha_id=hincha[0]) }}" class="ver-mas-button">Ver más</button>
+                
+              </td>
+            </tr>
+          {% endfor %}
+      </tbody>
+    </table>
+  </div>
+  <div class="row justify-content-md-center">
+    <div class="col-md-auto">
+      {{ pagination.links }}
+    </div>
+  </div>
+  <script type="module"  src="{{ url_for('static', filename = 'js/lista-hinchas.js') }}"></script>
+
+{% endblock %}

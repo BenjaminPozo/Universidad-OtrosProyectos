@@ -1,0 +1,66 @@
+@import url('https://fonts.googleapis.com/css2?family=Lato&display=swap');
+
+body {
+  padding: 10px;
+  display: block;
+  background-image: linear-gradient(to bottom, #a0d2eb, #e5eaf5, #e5eaf5, #a0d2eb);
+  background-size: cover;
+  font-family: 'Lato';
+  height: 100vh; 
+}
+
+.titulo-cont {
+  padding: 5px;
+  background-color: #494d5f;
+  margin-left: 30%;
+  margin-right: 30%;
+  color: #e5eaf5;
+  text-align: center;
+  border: 1px solid #494d5f;
+  border-radius: 10px;
+  margin-bottom: 20px;
+}
+
+.home, .artesanos{
+  background-color: #494d5f;
+  border: 1px solid #494d5f;
+  border-radius: 10px;
+  color: #e5eaf5;
+  padding: 10px;
+  text-decoration: none;
+}
+
+.contenedor-tabla {
+  background-color: #494d5f;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid #494d5f;
+  border-radius: 10px;
+  padding: 10px;
+  margin-right: 30%;
+  margin-left: 30%;
+}
+
+.tabla-artesano {
+  color: #494d5f;
+  text-align: center;
+  border-collapse: separate;
+  border-spacing: 10px;
+}
+
+.ver-mas {
+  display: none;
+}
+
+.valor {
+  background-color: #a0d2eb;
+  border: 5px solid #a0d2eb;
+  border-radius: 10px;
+}
+
+.encabezado {
+  background-color: #e5eaf5;
+  border: 5px solid #e5eaf5;
+  border-radius: 10px;
+}

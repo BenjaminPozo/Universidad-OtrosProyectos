@@ -1,0 +1,67 @@
+{% extends './base.html' %}
+
+{% block css %}
+  <link rel="stylesheet" href="{{ url_for('static', filename = 'css/lista-artesanos.css') }}">
+  <link
+      rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" />
+{% endblock %}
+
+{% block body %}
+
+<a href="/" class="home">Volver al Home</a>
+    <div class="titulo-cont">
+      <h1>Artesanos</h1>
+    </div>
+    <div class="contenedor-tabla">
+      <table class="tabla-artesanos">
+        <thead>
+          <tr>
+            <th>Nombre</th>
+            <th>Número de teléfono</th>
+            <th>Comuna</th>
+            <th>Tipos</th>
+            <th>Fotos artesanías</th>
+            <th class="ver-mas"></th>
+          </tr>
+        </thead>
+        <tbody id="listaArtesanos">
+          {% for artesano in data.artesanos %}
+            <tr>
+              <td>
+                {{ artesano[1] }}
+              </td>
+              <td>
+                {% if not artesano[2] %}
+                  <span style="color: red;">No hay datos</span>
+                {% else %}
+                  {{ artesano[2] }}
+                {% endif %}
+              </td>
+              <td>
+                {{ artesano[3] }}
+              </td>
+              <td>
+                {{ artesano[4] }}
+              </td>
+              <td>
+                {% for foto in artesano[5] %}
+                  <img src="{{ foto }}" alt="Imagen del artesano" width="150" style="margin: 5px 0px;">
+                {% endfor %}
+              </td>
+              
+              <td>
+                <button class="ver-mas-button">Ver más</button>
+              </td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+    <div class="row justify-content-md-center">
+      <div class="col-md-auto">
+        {{ pagination.links }}
+      </div>
+    </div>
+    
+{% endblock %}

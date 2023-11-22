@@ -1,0 +1,22 @@
+{% extends './base.html' %}
+
+{% block css %}
+  <link rel="stylesheet" href="{{ url_for('static', filename = 'css/index.css') }}">
+{% endblock %}
+{% block body %}
+<div class="contenedor-general">
+  <div class="contenedor-titulo">
+    <span class="titulo">Juegos panamericanos Chile 2023</span>
+  </div>
+
+  <div class="contenedor-botones">
+    <a href="/agregar-hincha" class="boton hincha">Registrar hincha</a>
+    <a href="/agregar-artesano" class="boton artesano">Registrar artesano</a>
+    <a href="/ver-hinchas" class="boton hincha">Ver listado hinchas</a>
+    <a href="/ver-artesanos" class="boton artesano">Ver listado artesanos</a>
+  </div>
+  <div class="stat_contenedor">
+    <a href="/estadisticas" class="boton-estadisticas">Estadísticas</a>
+  </div>
+</div>
+{% endblock %}
